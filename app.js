@@ -72,12 +72,35 @@ const menu = [
       desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
     },
   ];
-
+  let sectionCenter=document.querySelector('.section-center')
   window.addEventListener('DOMContentLoaded',loadMenu)
-  
+  let filterButtons=document.querySelectorAll('.filter-btn')
+  filterButtons.forEach(item=>item.addEventListener('click',function(){
+     
+    if(item.innerHTML!='All'){
+    sectionCenter.innerHTML=''
+    menu.filter(el=>el['category']==item.innerHTML.toLowerCase()).forEach(item => {
+      let article=document.createElement('article')
+      article.className='menu-item'
+      article.innerHTML=      `
+      <img src="${item.img}" class="photo" alt="menu-item">
+      <div class="item-info">
+          <header>
+              <h4>${item.title}</h4>
+              <h4 class="price">${item.price}</h4>
+          </header>
+          <p class="item-text">${item.desc}</p>
+      </div>
+      `
+      sectionCenter.appendChild(article)
+    });
+  }else{
+    loadMenu()
+  } 
+  }))
 
 
-  
+
   function loadMenu(){
     menu.forEach(item=>{
       let article=document.createElement('article')
@@ -92,7 +115,7 @@ const menu = [
           <p class="item-text">${item.desc}</p>
       </div>
       `
-      document.querySelector('.section-center').appendChild(article)
+      sectionCenter.appendChild(article)
 
 
     })
